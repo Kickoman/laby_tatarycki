@@ -17,34 +17,35 @@ struct Queue
 
 void task(Queue *first, Queue *last, int kod) // task for the defence
 {
-    Queue *minimum, *maximum;
-    if (kod == 1)
-        minimum = maximum = last;
-    else
-        minimum = maximum = first;
-    int minpos = 1, maxpos = 1;
-    int i = 1;
-    Queue *cur;
-    if (kod == 0)
-        cur = first;
+    Queue *minimum, *maximum; // Это будут наши указатели на минимальный и макимальный элемент
+    if (kod == 1) // Если мы будем искать позиции с конца
+        minimum = maximum = last; // то сначала примем за макс и мин - последний элемент
+    else // иначе - первый
+        minimum = maximum = first; // а сейчас будем корректировать
+    int minpos = 1, maxpos = 1; // так как пока что мы думаем, что крайний элемент
+                                // максимальный, то и номер порядковый у него пока что 1
+    int i = 1; // ну и счётчик, номер текущего рассматриваемого элемента
+    Queue *cur; // указатель на "текущий" элемент
+    if (kod == 0) // опять же, выбираем, что будет первым
+        cur = first; // в зав-сти от того, откуда идём, ну понятно
     else
         cur = last;
 
-    while (cur)
+    while (cur) // ну теперь давай двигаться по очереди
     {
-        if (cur->value > maximum->value)
+        if (cur->value > maximum->value) // если текущий элемент больше уже известного макса
         {
-            maximum = cur;
-            maxpos = i;
+            maximum = cur; // переставляем максимум на текущий
+            maxpos = i; // и запоминаем позицию
         }
-        if (cur->value < minimum->value)
+        if (cur->value < minimum->value) // то же самое для минимума
         {
             minimum = cur;
             minpos = i;
         }
-        i++;
-        if (kod == 0)
-                cur = cur->next;
+        i++; // увеличиваем порядочный номер "текущего" элемента
+        if (kod == 0) // ну и сдвигаем текущий элемент влево или вправо
+                cur = cur->next; // опять же, в зависимости от того, в какую сторону надо
         else
                 cur = cur->prev;
     }
