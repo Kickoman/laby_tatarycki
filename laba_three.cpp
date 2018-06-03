@@ -15,6 +15,43 @@ struct Queue
     Queue *prev, *next;
 } * _begin, *_end, *t;
 
+void task(Queue *first, Queue *last, int kod) // task for the defence
+{
+    Queue *minimum, *maximum;
+    if (kod == 1)
+        minimum = maximum = last;
+    else
+        minimum = maximum = first;
+    int minpos = 1, maxpos = 1;
+    int i = 1;
+    Queue *cur;
+    if (kod == 0)
+        cur = first;
+    else
+        cur = last;
+
+    while (cur)
+    {
+        if (cur->value > maximum->value)
+        {
+            maximum = cur;
+            maxpos = i;
+        }
+        if (cur->value < minimum->value)
+        {
+            minimum = cur;
+            minpos = i;
+        }
+        i++;
+        if (kod == 0)
+                cur = cur->next;
+        else
+                cur = cur->prev;
+    }
+    cout << "Maximum number position = " << maxpos << endl;
+    cout << "Minimum number position = " << minpos << endl;
+}
+
 void addToFront(Queue **first, Queue **last, int value)
 {
     Queue *temp = new Queue;
